@@ -1,29 +1,56 @@
-'use strict';
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import { commands, ExtensionContext, TextEditor, TextEditorEdit, workspace } from 'vscode';
+import SimpleIterator from './SimpleIterator';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: ExtensionContext) {
+  let disposable = commands.registerTextEditorCommand('extension.cssToJss', convertStyles);
 
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "css-to-jss" is now active!');
-
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.sayHello', () => {
-        // The code you place here will be executed every time your command is executed
-
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
-    });
-
-    context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable);
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() {
+function convertStyles(textEditor: TextEditor, textEditorEdit: TextEditorEdit) {
+  const { selections } = textEditor;
+
+  const config = workspace.getConfiguration("css-to-jss");
+  const isDoubleQuotes: boolean = config.get('use-double-quotes') || false;
+
+  selections.forEach(selection => {
+    Array.from(new SimpleIterator(selection.start.line, selection.end.line)).forEach(lineIndex => {
+      const line = textEditor.document.lineAt(lineIndex);
+
+      const detailedProperty = parseProperty(line.text);
+      if (!detailedProperty) { return; }
+
+      const { spacing, name, value } = detailedProperty;
+
+      textEditorEdit.replace(line.range, `${spacing}${toCamelCase(name)}: ${formatValue(value, isDoubleQuotes)},`);
+    });
+  });
+}
+
+interface IPropertyDetails {
+  spacing: string;
+  name: string;
+  value: string;
+}
+
+function parseProperty(property: string): IPropertyDetails | null {
+  const match = /^( *?)([-\w]+):? ?['"]?([^;{}]+?)['"]?[,;]?$/.exec(property);
+  if (!match) { return null; }
+
+  const [, spacing, name, value] = match;
+  return { spacing, name, value };
+}
+
+function toCamelCase(value: string) {
+  return value.replace(/\W+(.)/g, function (_match, chr) {
+    return chr.toUpperCase();
+  });
+}
+
+function formatValue(value: string, isDoubleQuotes: boolean) {
+  if (/^\d+(\.\d+?)?(px)?$/.test(value)) {
+    return parseFloat(value);
+  }
+  const quote = isDoubleQuotes ? '"' : '\'';
+  return `${quote}${value}${quote}`;
 }

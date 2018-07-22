@@ -2,7 +2,7 @@
     "name": "css-to-jss",
     "displayName": "css-to-jss",
     "description": "For converting css rules to jss format",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "publisher": "infarkt",
     "engines": {
         "vscode": "^1.24.0"
@@ -11,16 +11,32 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:extension.cssToJss"
     ],
     "main": "./out/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "extension.cssToJss",
+                "title": "CSS to JSS"
             }
-        ]
+        ],
+        "keybindings": [
+            {
+                "command": "extension.cssToJss",
+                "key": "Alt+x"
+            }
+        ],
+        "configuration":{
+            "title": "CSS to JSS configuration",
+            "properties": {
+                "css-to-jss.use-double-quotes": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Use double quote for property values"
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
