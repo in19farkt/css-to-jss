@@ -1,6 +1,6 @@
 # CSS to JSS
 
-This is an extension for Visual Studio Code that allows you to convert CSS to (JSS)[http://cssinjs.org] and vice versa.
+This is an extension for Visual Studio Code that allows you to convert CSS to [JSS](http://cssinjs.org) and vice versa.
 
 ## Usage
 
