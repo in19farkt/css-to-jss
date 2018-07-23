@@ -2,7 +2,7 @@
     "name": "css-to-jss",
     "displayName": "css-to-jss",
     "description": "For converting css rules to jss format",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publisher": "infarkt",
     "icon": "img/icon.png",
     "engines": {
@@ -32,7 +32,7 @@
                 "key": "Alt+x"
             }
         ],
-        "configuration":{
+        "configuration": {
             "title": "CSS to JSS configuration",
             "properties": {
                 "css-to-jss.use-double-quotes": {
