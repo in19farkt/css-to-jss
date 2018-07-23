@@ -1,0 +1,17 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>background</title>
+  <rect fill="#ffffff" id="canvas_background" height="402" width="402" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_4" height="310" width="310" y="45" x="45" stroke-width="4" stroke="#000" fill="#f7df1d"/>
+  <text stroke="#000" transform="matrix(1.8219768032202954,0,0,1.9390709121938698,-82.18896451517125,-5.012770986175383) " font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="50" id="svg_1" y="74.39831" x="45.983744" stroke-width="0" fill="#000000">CSS</text>
+  <text stroke="#000" transform="matrix(1.8219768032202954,0,0,1.9390709121938698,-47.18896451517126,-18.012770986175383) " font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="50" id="svg_2" y="178.0562" x="149.717227" stroke-width="0" fill="#000000">JSS</text>
+  <text stroke="#000" transform="matrix(1.8219768032202954,0,0,1.9390709121938698,-47.18896451517126,-18.012770986175383) " font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="50" id="svg_3" y="129.579376" x="111.297418" stroke-width="0" fill="#000000">to</text>
+ </g>
+</svg>
