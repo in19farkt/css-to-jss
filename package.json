@@ -2,7 +2,7 @@
     "name": "css-to-jss",
     "displayName": "CSS to JSS",
     "description": "For converting css rules to jss format",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "publisher": "infarkt",
     "icon": "img/icon.png",
     "engines": {
