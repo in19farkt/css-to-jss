@@ -17,11 +17,11 @@ This is an extension for Visual Studio Code that allows you to convert CSS to (J
 
 ### To JSS
 
-![toJssDemo](./img/css-to-jss.gif)
+![toJssDemo](img/css-to-jss.gif)
 
 ### To CSS
 
-![toCssDemo](./img/jss-to-css.gif)
+![toCssDemo](img/jss-to-css.gif)
 
 ## Known Issues
 None yet.
