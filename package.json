@@ -18,7 +18,7 @@
         "commands": [
             {
                 "command": "extension.cssToJss",
-                "title": "CSS to JSS"
+                "title": "CSS to JSS or JSS to CSS"
             }
         ],
         "keybindings": [

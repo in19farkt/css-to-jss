@@ -1,17 +1,27 @@
 # CSS to JSS
 
-This is an extension for Visual Studio Code that allows you to convert CSS to (JSS)[http://cssinjs.org].
+This is an extension for Visual Studio Code that allows you to convert CSS to (JSS)[http://cssinjs.org] and vice versa.
 
 ## Usage
 
 ### Keybindings
-* `Alt+X` CSS to JSS. Converts selected text from CSS to JSS.
+* `Alt+X` CSS to JSS or JSS to CSS. Converts selected text.
 
 ### Commands
-* CSS to JSS. Converts selected text from CSS to JSS.
+* CSS to JSS or JSS to CSS. Converts selected text.
 
-## Extension Settings
+#### Extension Settings
 * `css-to-jss.use-double-quotes`: Use double quote for property values. Default `false`.
+
+## Demo
+
+### To JSS
+
+![toJssDemo][to-jss-demo]
+
+### To CSS
+
+![toCssDemo][to-css-demo]
 
 ## Known Issues
 None yet.
@@ -28,3 +38,6 @@ Feel free to fork this repository and use it the way you like. If you want to pr
 [My github](https://github.com/in19farkt/css-to-jss)
 
 **Enjoy!**
+
+[to-css-demo]: ./img/jss-to-css.gif
+[to-jss-demo]: ./img/css-to-jss.gif
