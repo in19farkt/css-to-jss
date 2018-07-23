@@ -17,11 +17,11 @@ This is an extension for Visual Studio Code that allows you to convert CSS to (J
 
 ### To JSS
 
-![toJssDemo][to-jss-demo]
+![toJssDemo](./img/css-to-jss.gif)
 
 ### To CSS
 
-![toCssDemo][to-css-demo]
+![toCssDemo](./img/jss-to-css.gif)
 
 ## Known Issues
 None yet.
@@ -38,6 +38,3 @@ Feel free to fork this repository and use it the way you like. If you want to pr
 [My github](https://github.com/in19farkt/css-to-jss)
 
 **Enjoy!**
-
-[to-css-demo]: ./img/jss-to-css.gif
-[to-jss-demo]: ./img/css-to-jss.gif
