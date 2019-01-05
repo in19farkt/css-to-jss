@@ -38,8 +38,8 @@ interface IPropertyDetails {
   type: 'css' | 'jss';
 }
 
-function parseProperty(property: string): IPropertyDetails | null {
-  const match = /^( *?)([-\w]+):? ?['"]?([^;{}]+?)['"]?[,;]?$/.exec(property);
+export function parseProperty(property: string): IPropertyDetails | null {
+  const match = /^([ \t]*?)([-\w]+):? ?['"]?([^;{}]+?)['"]?[,;]?$/.exec(property);
   const type: IPropertyDetails['type'] | null = (isCSS(property) && 'css') || (isJSS(property) && 'jss') || null;
   if (!match || !type) { return null; }
 
