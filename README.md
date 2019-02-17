@@ -26,10 +26,7 @@ This is an extension for Visual Studio Code that allows you to convert CSS to [J
 ## Known Issues
 None yet.
 
-## Release Notes
-
-### 1.0.0
-Initial release
+## [Change log](./CHANGELOG.md)
 
 -----------------------------------------------------------------------------------------------------------
 ## Contributing
