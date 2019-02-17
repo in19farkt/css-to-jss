@@ -1,4 +1,4 @@
-import { commands, ExtensionContext, TextEditor, TextEditorEdit, workspace } from 'vscode';
+import { commands, ExtensionContext, TextEditor, TextEditorEdit, workspace, TextLine } from 'vscode';
 import SimpleIterator from './SimpleIterator';
 
 export function activate(context: ExtensionContext) {
@@ -20,39 +20,78 @@ function convertStyles(textEditor: TextEditor, textEditorEdit: TextEditorEdit) {
   };
 
   selections.forEach(selection => {
-    Array.from(new SimpleIterator(selection.start.line, selection.end.line)).forEach(lineIndex => {
-      const line = textEditor.document.lineAt(lineIndex);
+    const lines: Array<[TextLine, IPropertyDetails]> = Array
+      .from(new SimpleIterator(selection.start.line, selection.end.line))
+      .map(lineIndex => {
+        const line = textEditor.document.lineAt(lineIndex);
+        return [line, parseProperty(line.text)];
+      })
+      .filter(([_, detail]) => Boolean(detail)) as Array<[TextLine, IPropertyDetails]>;
 
-      const detailedProperty = parseProperty(line.text);
-      if (!detailedProperty) { return; }
+    const maxType = calcMaxType(lines.map(([_, details]) => details));
+    const completeLines = lines.map<[TextLine, IPropertyDetails]>(
+      ([line, details]) => [line, { ...details, type: details.type || maxType }]
+    );
 
-      textEditorEdit.replace(line.range, formatProperty(detailedProperty, config));
-    });
+    completeLines
+      .filter(([_, details]) => Boolean(details.type))
+      .forEach(([line, details]) => textEditorEdit.replace(line.range, formatProperty(details, config)));
   });
 }
 
-interface IPropertyDetails {
+type PropertyType = 'css' | 'jss';
+
+export interface IPropertyDetails {
   spacing: string;
   name: string;
   value: string;
-  type: 'css' | 'jss';
+  type: PropertyType | null;
+}
+
+export function calcMaxType(details: IPropertyDetails[]): PropertyType | null {
+  interface IResult {
+    css: IPropertyDetails[];
+    jss: IPropertyDetails[];
+    unknown: IPropertyDetails[];
+  }
+  if (!details.length) { return null; }
+  const grouped = details.reduce<IResult>(
+    (acc, cur) => {
+      acc[cur.type || 'unknown'].push(cur);
+      return acc;
+    },
+    { css: [], jss: [], unknown: [], },
+  );
+  return [grouped.css, grouped.jss, grouped.unknown].sort((a, b) => b.length - a.length)[0][0].type;
 }
 
 export function parseProperty(property: string): IPropertyDetails | null {
   const match = /^([ \t]*?)([-\w]+):? ?['"]?([^;{}]+?)['"]?[,;]?$/.exec(property);
-  const type: IPropertyDetails['type'] | null = (isCSS(property) && 'css') || (isJSS(property) && 'jss') || null;
-  if (!match || !type) { return null; }
+  const type = calcPropertyType(property);
+  if (!match) { return null; }
 
   const [, spacing, name, value] = match;
   return { spacing, name, value, type };
 }
 
+export function calcPropertyType(property: string): PropertyType | null {
+  return (isCSS(property) && 'css') || (isJSS(property) && 'jss') || null;
+}
+
 function isCSS(item: string) {
-  return (item.match(/;/g) || []).length === 1;
+  return isCSSName(item) || !isJSSName(item) && (item.match(/;/g) || []).length === 1;
 }
 
 function isJSS(item: string) {
-  return (item.trim().match(/,$/g) || []).length === 1;
+  return isJSSName(item) || !isCSSName(item) && (item.trim().match(/,$/g) || []).length === 1;
+}
+
+function isCSSName(item: string) {
+  return /^.+?-.+?:.+$/.test(item);
+}
+
+function isJSSName(item: string) {
+  return /^.+?[A-Z].*?:.+$/.test(item);
 }
 
 function formatProperty(property: IPropertyDetails, config: IConfig) {
