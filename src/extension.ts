@@ -66,7 +66,7 @@ export function calcMaxType(details: IPropertyDetails[]): PropertyType | null {
 }
 
 export function parseProperty(property: string): IPropertyDetails | null {
-  const match = /^([ \t]*?)([-\w]+):? ?['"]?([^;{}]+?)['"]?[,;]?$/.exec(property);
+  const match = /^([ \t]*?)([-\w]+):? ?['"]?([^;{}]+?)['"]?[,;]?[ \t]*?$/.exec(property);
   const type = calcPropertyType(property);
   if (!match) { return null; }
 
@@ -79,7 +79,7 @@ export function calcPropertyType(property: string): PropertyType | null {
 }
 
 function isCSS(item: string) {
-  return isCSSName(item) || !isJSSName(item) && (item.match(/;/g) || []).length === 1;
+  return isCSSName(item) || !isJSSName(item) && (item.trim().match(/;$/g) || []).length === 1;
 }
 
 function isJSS(item: string) {

@@ -26,7 +26,19 @@ suite("parseProperty Tests", function () {
             value: '12px',
             type: 'css',
         });
+        assert.deepEqual(parseProperty('\tmargin: 12px;    '), {
+            spacing: '\t',
+            name: 'margin',
+            value: '12px',
+            type: 'css',
+        });
         assert.deepEqual(parseProperty('  margin: 12,'), {
+            spacing: '  ',
+            name: 'margin',
+            value: '12',
+            type: 'jss',
+        });
+        assert.deepEqual(parseProperty('  margin: 12,    '), {
             spacing: '  ',
             name: 'margin',
             value: '12',
@@ -50,6 +62,7 @@ suite("parseProperty Tests", function () {
 suite("calcPropertyType Tests", function () {
     test("Should correctly calculate css type", function () {
         assert.equal(calcPropertyType('margin: 10;'), 'css');
+        assert.equal(calcPropertyType('margin: 10;   '), 'css');
         assert.equal(calcPropertyType('margin: 10'), null);
         assert.equal(calcPropertyType('margin-top: 10;'), 'css');
         assert.equal(calcPropertyType('margin-top: 10,'), 'css');
@@ -63,6 +76,7 @@ suite("calcPropertyType Tests", function () {
     });
     test("Should correctly calculate jss type", function () {
         assert.equal(calcPropertyType('margin: 10,'), 'jss');
+        assert.equal(calcPropertyType('margin: 10,   '), 'jss');
         assert.equal(calcPropertyType('margin: 10'), null);
         assert.equal(calcPropertyType('marginTop: 10;'), 'jss');
         assert.equal(calcPropertyType('marginTop: 10,'), 'jss');
