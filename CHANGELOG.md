@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.7] - 2019-02-17
+### Changed
+- Ignore trailing spaces (issue #8)
+
 ## [1.0.6] - 2019-02-17
 ### Changed
 - Improved property type detecting (CSS or JSS property) (issue #3)
