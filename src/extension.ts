@@ -100,7 +100,8 @@ function formatProperty(property: IPropertyDetails, config: IConfig) {
 }
 
 function toJSS({ spacing, name, value }: IPropertyDetails, config: IConfig) {
-  return `${spacing}${toCamel(name)}: ${formatJssValue(value, config.isDoubleQuotes)},`;
+  const shouldRemovePx = propertiesWithPx.includes(name)
+  return `${spacing}${toCamel(name)}: ${formatJssValue(value, config.isDoubleQuotes, shouldRemovePx)},`;
 }
 
 function toCSS({ spacing, name, value }: IPropertyDetails, config: IConfig) {
@@ -116,8 +117,8 @@ function toCamel(value: string) {
   return value.replace(/\W+(.)/g, (_match, chr) => chr.toUpperCase());
 }
 
-function formatJssValue(value: string, isDoubleQuotes: boolean) {
-  if (/^\d+(\.\d+?)?(px)?$/.test(value)) {
+function formatJssValue(value: string, isDoubleQuotes: boolean, shouldRemovePx: boolean) {
+  if (shouldRemovePx && /^\d+(\.\d+?)?(px)?$/.test(value)) {
     return parseFloat(value);
   }
   const quote = isDoubleQuotes ? '"' : '\'';
